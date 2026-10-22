@@ -1,0 +1,15 @@
+#!/bin/sh
+
+MESSAGE_FILE="$1"
+MESSAGE=$(head -n 1 "$MESSAGE_FILE")
+
+PATTERN='^(feat|fix|docs|style|refactor|test|chore|ci|build|perf|revert)(\([a-zA-Z0-9._/-]+\))?!?: .{1,100}$'
+
+if ! printf '%s\n' "$MESSAGE" | grep -Eq "$PATTERN"; then
+    echo "Ошибка: используйте формат Conventional Commits."
+    echo "Пример: feat: add student API"
+    echo "Пример: test: add student service tests"
+    exit 1
+fi
+
+echo "Сообщение коммита соответствует Conventional Commits."
